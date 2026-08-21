@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:bs="https://www.business-standard.com/rss/">
+  <channel>
+    <title><![CDATA[Share Market Today]]></title>
+    <link>https://www.business-standard.com/markets</link>
+    <description><![CDATA[Stay updated with the latest stock market news and live updates. Get real-time insights on Sensex Today, Nifty Live, stock market today, IPO news and more on Business Standard.]]></description>
+    <copyright>Business Standard</copyright>
+    <lastBuildDate>Fri, 21 Aug 2026 21:29:26 +0530</lastBuildDate>
+    <language>en-us</language>
+    <image>
+      <title>Markets</title>
+      <url>https://www.business-standard.com/markets</url>
+      <link>https://www.business-standard.com/markets</link>
+    </image>
+    <atom:link href="https://www.business-standard.com/rss/markets-106.rss" rel="self" type="application/rss+xml"/>
+    <item>
+      <title><![CDATA[Prop traders stay biggest derivatives winners as retail continues to lose]]></title>
+      <link>https://www.business-standard.com/markets/capital-market-news/prop-traders-stay-biggest-derivatives-winners-as-retail-continues-to-lose-126082101242_1.html</link>
+      <guid>https://www.business-standard.com/markets/capital-market-news/prop-traders-stay-biggest-derivatives-winners-as-retail-continues-to-lose-126082101242_1.html</guid>
+      <description><![CDATA[Algo trading drives prop desks' dominance in equity derivatives]]></description>
+      <media:content url="https://bsmedia.business-standard.com/_media/bs/img/article/default/1260821/full-126082101242.jpg">
+        <media:thumbnail url="https://bsmedia.business-standard.com/_media/bs/img/article/default/1260821/thumb-126082101242.jpg"/>
+        <media:title>Retail investors, Indian equities, retail inflows, stock market, Nifty, DII inflows, mutual funds, demat accounts, IPO market, domestic institutional investors, equity investing, H1CY26, market rally, investor sentiment, Indian stock market, global u</media:title>
+      </media:content>
+      <pubDate>Fri, 21 Aug 2026 19:41:26 +0530</pubDate>
+      <bs:lastModification>Fri, 21 Aug 2026 21:29:26 +0530</bs:lastModification>
+      <bs:keywords>proprietary traders, prop trading, derivatives, retail investors, Sebi, algorithmic trading, algo trading, equity derivatives, options trading, FPI, retail losses</bs:keywords>
+      <dc:publisher>Business Standard</dc:publisher>
+      <category>Markets</category>
+      <category>Capital Market News</category>
+      <bs:section>Markets</bs:section>
+      <bs:subsection>Capital Market News</bs:subsection>
+      <bs:source>Business Standard</bs:source>
+      <bs:contentType>News</bs:contentType>
+    </item>
+    <item>
+      <title><![CDATA[Innovision receives toll collection mandate for Etaura Bujurg & Akhtiyari Kotila fee plaza]]></title>
+      <link>https://www.business-standard.com/markets/capital-market-news/innovision-receives-toll-collection-mandate-for-etaura-bujurg-akhtiyari-kotila-fee-plaza-126082101218_1.html</link>
+      <guid>https://www.business-standard.com/markets/capital-market-news/innovision-receives-toll-collection-mandate-for-etaura-bujurg-akhtiyari-kotila-fee-plaza-126082101218_1.html</guid>
+      <description><![CDATA[]]></description>
+      <pubDate>Fri, 21 Aug 2026 19:31:32 +0530</pubDate>
+      <bs:lastModification>Fri, 21 Aug 2026 19:31:36 +0530</bs:lastModification>
+      <bs:keywords>Innovision receives toll collection mandate for Etaura Bujurg &amp; Akhtiyari Kotila fee plaza</bs:keywords>
+      <dc:publisher>Business Standard</dc:publisher>
+      <category>Markets</category>
+      <category>Capital Market News</category>
+      <bs:section>Markets</bs:section>
+      <bs:subsection>Capital Market News</bs:subsection>
+      <bs:source>Capital Market Automatic</bs:source>
+      <bs:contentType>News</bs:contentType>
+    </item>
+    </channel>
+</rss>

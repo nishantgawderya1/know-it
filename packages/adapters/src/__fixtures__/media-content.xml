@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?> <rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title><![CDATA[Market News in CNBCTV18, Market Latest News, Market News]]></title>
+    <description><![CDATA[Get Market News in CNBCTV18, Find Market Latest News on CNBCTV18]]></description>
+    <link>https://www.cnbctv18.com/market/</link>
+    <lastBuildDate>Fri, 21 Aug 2026 21:55:33 +0530</lastBuildDate>
+    <atom:link href="https://www.cnbctv18.com/commonfeeds/v1/cne/rss/market.xml" rel="self" type="application/rss+xml"/>
+    <category>Market</category>
+    <ttl>60</ttl>
+    <copyright>Copyright (C) https://cnbctv18.com. All Rights Reserved.</copyright>
+    <generator>https://www.cnbctv18.com/</generator>
+    <language>en</language>
+    <docs>https://www.cnbctv18.com/</docs>
+    <image>
+      <url>https://www.cnbctv18.com/_next/static/media/cnbctv18-logo.e3f586f6.png</url>
+      <link>https://www.cnbctv18.com/market/</link>
+      <title>Market News in CNBCTV18, Market Latest News, Market News</title>
+      <description>Feed provided by CNBCTV18</description>
+    </image>
+    <item>
+      <title><![CDATA[Bank of Baroda raises another $400 million overseas, takes 2031 bond issue to $700 million]]></title>
+      <link><![CDATA[https://www.cnbctv18.com/business/companies/bank-of-baroda-raises-another-400-million-overseas-takes-2031-bond-issue-to-700-million-19974732.htm]]></link>
+      <description><![CDATA[Bank of Baroda has raised an additional $400 million through five-year senior unsecured notes carrying a 5.318% coupon, adding to the $300 million issued earlier.]]></description>
+      <pubDate><![CDATA[Fri, 21 Aug 2026 20:37:16 +0530]]></pubDate>
+      <dc:creator>Asmi.Saxena</dc:creator>
+      <guid><![CDATA[https://www.cnbctv18.com/business/companies/bank-of-baroda-raises-another-400-million-overseas-takes-2031-bond-issue-to-700-million-19974732.htm]]></guid>
+      <category><![CDATA[Market]]></category>
+      <media:content height="675" width="1200" medium="image" url="https://images.cnbctv18.com/uploads/2026/08/bank-of-baroda-2026-08-02821f0fae1470a9a18a6b482cb7edf4.jpg"/>
+    </item>
+    <item>
+      <title><![CDATA[Caplin Point arm gets 10 USFDA observations after unannounced inspection; no data integrity issues]]></title>
+      <link><![CDATA[https://www.cnbctv18.com/business/companies/caplin-point-arm-gets-10-usfda-observations-after-unannounced-inspection-no-data-integrity-issues-19974709.htm]]></link>
+      <description><![CDATA[The USFDA issued 10 observations after inspecting Caplin Steriles’ Gummidipoondi facility. The company said they are procedural in nature, with none related to data integrity or repeated from earlier inspections.]]></description>
+      <pubDate><![CDATA[Fri, 21 Aug 2026 20:34:07 +0530]]></pubDate>
+      <dc:creator>Srabastee.Biswas</dc:creator>
+      <guid><![CDATA[https://www.cnbctv18.com/business/companies/caplin-point-arm-gets-10-usfda-observations-after-unannounced-inspection-no-data-integrity-issues-19974709.htm]]></guid>
+      <category><![CDATA[Market]]></category>
+      <media:content height="675" width="1200" medium="image" url="https://images.cnbctv18.com/uploads/2026/08/untitled-design-2026-08-21t194040411-2026-08-1655298fc8d06a7c2341db3c642324f2.jpg"/>
+    </item>
+    </channel>
+</rss>

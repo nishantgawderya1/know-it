@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hand-written, unlike the other two fixtures. It carries the shapes that the live
+  registry uses but which no single real feed exercises together, plus the failure
+  cases: a tracking pixel ahead of the real image, a video enclosure that must not be
+  mistaken for a photograph, and an item with no image at all.
+-->
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Fixture Feed</title>
+    <link>https://fixture.example/</link>
+    <item>
+      <title>Enclosure carries the image</title>
+      <link>https://fixture.example/a</link>
+      <pubDate>Mon, 18 Aug 2026 09:00:00 +0530</pubDate>
+      <enclosure url="https://cdn.fixture.example/photos/a.jpg" type="image/jpeg" length="82311"/>
+    </item>
+    <item>
+      <title>Image is inside content:encoded, behind a tracking pixel</title>
+      <link>https://fixture.example/b</link>
+      <pubDate>Mon, 18 Aug 2026 09:05:00 +0530</pubDate>
+      <content:encoded><![CDATA[
+        <img src="https://cdn.fixture.example/pixel.gif" width="1" height="1"/>
+        <p>The market opened higher.</p>
+        <img src="https://cdn.fixture.example/photos/b.jpg" width="1200"/>
+      ]]></content:encoded>
+    </item>
+    <item>
+      <title>Enclosure is a podcast, not a photograph</title>
+      <link>https://fixture.example/c</link>
+      <pubDate>Mon, 18 Aug 2026 09:10:00 +0530</pubDate>
+      <enclosure url="https://cdn.fixture.example/audio/c.mp3" type="audio/mpeg" length="9000000"/>
+    </item>
+    <item>
+      <title>No image anywhere</title>
+      <link>https://fixture.example/d</link>
+      <pubDate>Mon, 18 Aug 2026 09:15:00 +0530</pubDate>
+      <description>Plain text only.</description>
+    </item>
+  </channel>
+</rss>
