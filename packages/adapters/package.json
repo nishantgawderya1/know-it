@@ -1,0 +1,20 @@
+{
+  "name": "@knowit/adapters",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@knowit/core": "*",
+    "linkedom": "^0.18.9",
+    "rss-parser": "^3.13.0"
+  }
+}
