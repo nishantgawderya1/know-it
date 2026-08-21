@@ -1,0 +1,40 @@
+# Fly.io — the fetcher daemon.
+#
+#   fly launch --no-deploy --copy-config    # first time; creates the app
+#   fly secrets set DATABASE_URL="..." DIRECT_DATABASE_URL="..." GITHUB_TOKEN="..."
+#   fly deploy
+#
+# Secrets are never in this file. It is committed; `fly secrets` are not.
+
+app = "knowit-worker"
+primary_region = "bom"   # Mumbai — the Finance registry is almost entirely Indian hosts
+
+[build]
+  dockerfile = "apps/worker/Dockerfile"
+
+[env]
+  WORKER_TICK_MS = "30000"
+  WORKER_BATCH_SIZE = "10"
+  WORKER_USER_AGENT = "KnowItBot/0.1 (+https://knowit.example/bot)"
+  # Use the system trust store rather than Node's bundled CA list. Some Indian government
+  # hosts present intermediates Node does not carry, and the alternative — disabling TLS
+  # verification — would make a regulator feed spoofable.
+  NODE_EXTRA_CA_CERTS = "/etc/ssl/certs/ca-certificates.crt"
+
+# No [http_service]: this is a daemon, not a server. It listens on nothing.
+#
+# auto_stop_machines is deliberately absent for the same reason. Fly stops idle machines
+# by watching HTTP traffic, and a fetcher that receives none would be stopped permanently
+# — a total coverage outage that looks like a quiet news day.
+[[vm]]
+  size = "shared-cpu-1x"
+  # 512MB is enough for feed parsing but linkedom holds a full DOM per article and several
+  # sources run concurrently. 1GB buys headroom before OOM kills a tick mid-insert.
+  memory = "1gb"
+  cpus = 1
+
+# Exactly one machine. The scheduler claims work with FOR UPDATE SKIP LOCKED so a second
+# would be safe, but it would also double the request rate against every publisher, and
+# politeness is a correctness feature here — a ban is a silent coverage hole.
+[deploy]
+  strategy = "immediate"
