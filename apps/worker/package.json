@@ -1,0 +1,24 @@
+{
+  "name": "@knowit/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file-if-exists=../../.env src/index.ts",
+    "once": "tsx --env-file-if-exists=../../.env src/once.ts",
+    "audit": "tsx --env-file-if-exists=../../.env src/audit-run.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "probe": "tsx --env-file-if-exists=../../.env src/probe.ts",
+    "fetch:one": "tsx --env-file-if-exists=../../.env src/fetch-one.ts",
+    "dedupe:legacy": "tsx --env-file-if-exists=../../.env src/dedupe-legacy.ts"
+  },
+  "dependencies": {
+    "@knowit/adapters": "*",
+    "@knowit/core": "*",
+    "@knowit/db": "*",
+    "@mozilla/readability": "^0.6.0",
+    "drizzle-orm": "^0.45.2",
+    "linkedom": "^0.18.9"
+  }
+}

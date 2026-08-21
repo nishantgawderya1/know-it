@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    // The worker parses HTML with linkedom and hands it to Readability, whose signature is
+    // typed against the DOM. Adding the lib here (and nowhere else) lets that bridge be an
+    // explicit cast rather than an `any`. There is no browser at runtime — never reach for
+    // window/document globals in this package.
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src/**/*.ts"]
+}
