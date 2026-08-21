@@ -1,0 +1,1 @@
+ALTER TABLE "sources" ADD COLUMN "lowercase_url_path" boolean DEFAULT false NOT NULL;
