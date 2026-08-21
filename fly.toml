@@ -7,7 +7,10 @@
 # Secrets are never in this file. It is committed; `fly secrets` are not.
 
 app = "knowit-worker"
-primary_region = "bom"   # Mumbai — the Finance registry is almost entirely Indian hosts
+# Singapore. Mumbai (bom) is no longer a Fly region, and the Finance registry is almost
+# entirely Indian hosts — so this is ~50ms further from both the publishers and the
+# Supabase instance (ap-south-1). Irrelevant for a fetcher on a 10-minute cadence.
+primary_region = "sin"
 
 [build]
   dockerfile = "apps/worker/Dockerfile"
