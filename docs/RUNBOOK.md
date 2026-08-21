@@ -145,15 +145,22 @@ so items rolled off the end unseen).
 
 ## Deferred decisions
 
-**Four Finance sources are dark by choice.** MoneyControl, Business Standard, BSE and
-GoodReturns return 403 to any non-browser User-Agent, including the honest
+**Six Finance sources are dark by choice.** MoneyControl, Business Standard (both the
+site-wide and markets feeds), BSE, GoodReturns and NSE reject any non-browser User-Agent —
+403, or a hanging connection in NSE's case — including the honest
 `Mozilla/5.0 (compatible; KnowItBot…)` convention. `sources.user_agent` overrides it per
 row and is deliberately left unset.
 
 They are left **active and failing** so the gap stays visible rather than being papered
 over. Do not set a browser UA without an explicit decision — it is a publisher-relations
-posture, not a bug. Phase 1 ships at **15 of 19 Finance sources**, and the seven-day
-coverage number must be read with that caveat attached.
+posture, not a bug.
+
+Phase 1 therefore ships at **13 of 19 Finance sources**, and the seven-day coverage number
+must be read with that caveat attached: it is measured against roughly two thirds of the
+intended registry, so it understates real-world difficulty.
+
+Three Tech sources are dark for the same reason (MeitY, PIB, YourStory). Tech is shadow
+mode and does not gate, so this is recorded rather than acted on.
 
 **MOSPI is deactivated.** Its press-release list is fetched client-side by a Vite bundle,
 so the served HTML has three links and all three are font CDNs. Reactivating it needs the
