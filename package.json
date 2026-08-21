@@ -1,0 +1,34 @@
+{
+  "name": "knowit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Provenance-first news aggregation for domain professionals",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "db:generate": "npm run db:generate --workspace @knowit/db",
+    "db:migrate": "npm run db:migrate --workspace @knowit/db",
+    "db:seed": "npm run db:seed --workspace @knowit/db",
+    "worker": "npm run start --workspace @knowit/worker",
+    "worker:once": "npm run once --workspace @knowit/worker",
+    "web": "npm run dev --workspace @knowit/web",
+    "probe": "npm run probe --workspace @knowit/worker",
+    "audit": "npm run audit --workspace @knowit/worker",
+    "fetch:one": "npm run fetch:one --workspace @knowit/worker --",
+    "dedupe:legacy": "npm run dedupe:legacy --workspace @knowit/worker"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.10"
+  }
+}
