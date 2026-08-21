@@ -8,7 +8,16 @@
  * claim, and two rows for one RBI release would inflate that count.
  *
  * Keeps the row whose URL matches what the current canonicaliser produces.
+ *
+ * Compares the PATH only. `lowercase_url_path` lowercases the path and deliberately leaves
+ * the query alone, because query parameters are case-sensitive to the server: RBI serves
+ * ?Id=13678&Mode=0, and lowercasing that yields a 404. An earlier version of this script
+ * compared the whole URL, decided every correctly-canonicalised RBI notification looked
+ * stale, and deleted ten of them.
  */
+
+/** The path portion of a URL, as Postgres sees it — everything after the host, before ?#. */
+const URL_PATH = sql`substring(d.url from '^https?://[^/?#]+([^?#]*)')`;
 
 import { sql } from 'drizzle-orm';
 import { createDb } from '@knowit/db';
@@ -21,7 +30,7 @@ async function main(): Promise<void> {
     FROM raw_documents d
     JOIN sources s ON s.id = d.source_id
     WHERE s.lowercase_url_path
-      AND d.url <> lower(d.url)`);
+      AND ${URL_PATH} <> lower(${URL_PATH})`);
 
   if (stale.length === 0) {
     console.log('no pre-canonicalisation rows found — nothing to do');
@@ -37,7 +46,7 @@ async function main(): Promise<void> {
     USING sources s
     WHERE s.id = d.source_id
       AND s.lowercase_url_path
-      AND d.url <> lower(d.url)
+      AND ${URL_PATH} <> lower(${URL_PATH})
     RETURNING d.id`);
 
   console.log(`\ndeleted ${deleted.length} duplicate rows`);
