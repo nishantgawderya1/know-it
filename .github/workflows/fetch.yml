@@ -1,0 +1,49 @@
+# The fetcher, on a schedule.
+#
+# Replaces the always-on daemon (apps/worker/src/index.ts) with periodic runs of the same
+# pipeline. `worker:once` claims whatever the scheduler says is due and exits, so a cron
+# is behaviourally the daemon loop with a longer, less reliable tick.
+#
+# Known limitation, and it matters here: GitHub delays scheduled workflows under load,
+# sometimes by 15-30 minutes. Under-polling is precisely the failure Phase 1 measures, so
+# treat `under-polled` on the dashboard as a possible hosting artefact before recording it
+# as a registry gap. RBI ships a 10-item feed window; a badly slipped run can lose items.
+name: Fetch
+
+on:
+  schedule:
+    # Every 15 minutes. Sources with a 10-minute interval effectively poll at 15.
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+# Never two fetchers at once. SKIP LOCKED makes it safe for the database, but it would
+# double the request rate against every publisher — and a ban is a silent coverage hole.
+concurrency:
+  group: fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    # Below the cron interval on purpose, so a slow run cannot overlap the next one.
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Fetch due sources
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          # Larger than the daemon's batch: runs are 15 minutes apart rather than 30
+          # seconds, so each one has to drain more of the queue.
+          WORKER_BATCH_SIZE: 30
+          # The Actions-provided token, not a secret we manage. Raises the github_api
+          # adapter above the 60/hr unauthenticated ceiling.
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run worker:once

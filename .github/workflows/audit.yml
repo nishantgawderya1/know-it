@@ -1,0 +1,47 @@
+# Daily coverage audit — the number Phase 1 exists to produce.
+#
+# Separate from Fetch because it runs once a day, not every fifteen minutes, and because a
+# broken auditor must be visible as its own failure rather than buried in a fetch log.
+name: Coverage audit
+
+on:
+  schedule:
+    # 02:30 UTC — 08:00 IST, after Indian regulators have published the previous day and
+    # before the market open makes the outlet feeds noisy.
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # `npm run audit` exits non-zero when it finds gaps OR when an auditor itself broke.
+      # Both are recorded in coverage_audit and shown on the dashboard, so the job does not
+      # fail on them: a build that is permanently red because a new source has historical
+      # gaps is a build everyone learns to ignore, which costs the real alarm later.
+      # The run summary below is what you actually read.
+      - name: Run coverage audit
+        id: audit
+        continue-on-error: true
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm run audit 2>&1 | tee audit.log
+
+      - name: Summarise
+        run: |
+          {
+            echo '## Coverage audit'
+            echo '```'
+            grep -E '^\s+(OK|GAP|ERROR)|audited ·' audit.log || tail -20 audit.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

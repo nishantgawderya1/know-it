@@ -7,7 +7,35 @@ rather than how it works — the reasoning lives in `SYSTEM-DESIGN.md`.
 
 ## Deploy
 
-### Worker → Fly.io
+### Worker → GitHub Actions (current)
+
+The fetcher runs as a scheduled workflow rather than an always-on daemon, because Fly
+requires a payment method and Actions is free and unlimited on a public repo.
+
+- `.github/workflows/fetch.yml` — every 15 minutes, runs `worker:once`
+- `.github/workflows/audit.yml` — daily at 02:30 UTC (08:00 IST), runs the coverage audit
+
+**Setup is one secret.** Repo → Settings → Secrets and variables → Actions → New secret:
+
+```
+Name:  DATABASE_URL
+Value: postgresql://postgres.<ref>:<pw>@aws-0-<region>.pooler.supabase.com:5432/postgres
+```
+
+Then Actions → Fetch → *Run workflow* to confirm it works without waiting for the cron.
+
+**Two limitations to hold in mind:**
+
+1. GitHub delays scheduled workflows under load, sometimes 15–30 minutes. Under-polling is
+   exactly what Phase 1 measures, so an `under-polled` pill on the dashboard may be a
+   hosting artefact rather than a registry gap. Check the actual run times in the Actions
+   tab before recording it as a coverage failure.
+2. Scheduled workflows are **disabled automatically after 60 days without repo activity**.
+   A commit resets the clock; silence stops the fetcher without an alarm.
+
+Neither applies to the Fly setup below, which stays committed and ready.
+
+### Worker → Fly.io (available, not in use)
 
 ```bash
 fly auth login
