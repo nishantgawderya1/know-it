@@ -7,12 +7,23 @@
  */
 
 import { getDb } from '@knowit/db';
+import { runCoverageAudit } from './audit.js';
 import { config } from './config.js';
 import { DomainLimiter } from './politeness.js';
 import { applyRetention } from './retention.js';
 import { formatOutcome, loadPrimaryDomains, runTick } from './tick.js';
 
 const RETENTION_INTERVAL_MS = 60 * 60_000;
+
+/**
+ * The audit is what Phase 1 exists to produce, so it runs inside the daemon rather than as
+ * a separate scheduled job. A cron the fetcher does not own is a cron that silently stops
+ * and leaves a clean-looking coverage record behind it.
+ *
+ * Checked hourly, executed at most once per UTC day — coverage_audit is keyed on
+ * (source_id, audit_date), so a second run the same day would only overwrite the first.
+ */
+const AUDIT_CHECK_INTERVAL_MS = 60 * 60_000;
 
 let shuttingDown = false;
 
@@ -32,6 +43,8 @@ async function main(): Promise<void> {
 
   let lastRetentionAt = 0;
   let lastDomainRefreshAt = Date.now();
+  let lastAuditCheckAt = 0;
+  let lastAuditDate: string | null = null;
 
   while (!shuttingDown) {
     const startedAt = Date.now();
@@ -57,6 +70,31 @@ async function main(): Promise<void> {
             `[${stamp()}] retention · cleared text on ${result.textCleared} rows, ` +
               `html on ${result.htmlCleared}`,
           );
+        }
+      }
+
+      if (Date.now() - lastAuditCheckAt > AUDIT_CHECK_INTERVAL_MS) {
+        lastAuditCheckAt = Date.now();
+        const today = new Date().toISOString().slice(0, 10);
+        if (lastAuditDate !== today) {
+          const outcomes = await runCoverageAudit(db);
+          lastAuditDate = today;
+          const gaps = outcomes.filter((o) => o.status === 'gap');
+          const errors = outcomes.filter((o) => o.status === 'error');
+          console.log(
+            `[${stamp()}] audit ${today} · ${outcomes.length} sources · ` +
+              `${gaps.length} with gaps · ${errors.length} auditor failures`,
+          );
+          // Named, not counted. A gap is only actionable if you know which URLs it is.
+          for (const gap of gaps) {
+            console.log(
+              `  GAP   ${gap.slug.padEnd(26)} ${gap.ingested}/${gap.expected} held` +
+                (gap.missing[0] ? ` · e.g. ${gap.missing[0]}` : ''),
+            );
+          }
+          for (const failure of errors) {
+            console.log(`  ERROR ${failure.slug.padEnd(26)} ${failure.detail ?? ''}`);
+          }
         }
       }
 
