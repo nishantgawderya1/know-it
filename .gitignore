@@ -30,3 +30,6 @@ Thumbs.db
 # Local scratch
 tmp/
 scratch/
+
+# Next.js generated types — regenerated on every build
+next-env.d.ts
