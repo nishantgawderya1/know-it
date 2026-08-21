@@ -1,0 +1,34 @@
+name: CI
+
+# Typecheck and tests only. The live probe deliberately does not run here: it makes real
+# requests to ~47 publishers, and a CI job hammering them on every push is exactly the
+# behaviour that gets a crawler banned. Run `npm run probe` locally after registry edits.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      # Fails the build on a known vulnerability in anything that ships to production.
+      # Dev-only advisories are excluded: they do not reach the deployed worker, and
+      # failing on them trains people to ignore this step.
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
